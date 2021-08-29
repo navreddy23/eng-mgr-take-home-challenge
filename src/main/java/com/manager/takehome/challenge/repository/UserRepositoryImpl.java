@@ -18,17 +18,17 @@ public class UserRepositoryImpl implements UserRepository {
   public List<User> findAllActiveUser() {
 
     MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-    mapSqlParameterSource.addValue("isActive", "%" + true + "%");
+    mapSqlParameterSource.addValue("isActive", true);
 
-    return namedParameterJdbcTemplate.query("users.select manager_id, "
-            + "users.first_name, users.last_name, user.email from users"
+    return namedParameterJdbcTemplate.query("select users.id, "
+            + "users.first_name, users.last_name, users.email from users"
             + " where users.active = :isActive",
         mapSqlParameterSource,
         (rs, rowNum) ->
             new User.UserBuilder(
                 rs.getLong("id"),
-                rs.getString("firstName"),
-                rs.getString("lastName")
+                rs.getString("first_name"),
+                rs.getString("last_name")
             ).withEmailAddress(rs.getString("email"))
                 .build()
     );

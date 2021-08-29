@@ -1,11 +1,14 @@
 package com.manager.takehome.challenge.controller;
 
+import com.manager.takehome.challenge.builder.ActiveUsersRetrievalResponseBuilder;
 import com.manager.takehome.challenge.dto.v1.ActiveUsersRetrievalResponse;
+import com.manager.takehome.challenge.service.UserService;
 import com.manager.takehome.challenge.util.CorrelationIdUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class RetrieveUsersController {
+
+  @Autowired
+  UserService userService;
 
   private static final Logger logger = LoggerFactory.getLogger(RetrieveUsersController.class);
 
@@ -39,7 +45,9 @@ public class RetrieveUsersController {
     MDC.clear();
     MDC.put("correlationId", CorrelationIdUtil.getCorrelationIdFromHeader(httpServletRequest));
 
-    ActiveUsersRetrievalResponse activeUsersRetrievalResponse = new ActiveUsersRetrievalResponse();
+    ActiveUsersRetrievalResponse activeUsersRetrievalResponse =
+        ActiveUsersRetrievalResponseBuilder.buildActiveUsersRetrievalResponse(
+            userService.findAllActiveUsers());
 
     return new ResponseEntity<Object>(activeUsersRetrievalResponse, HttpStatus.OK);
   }
