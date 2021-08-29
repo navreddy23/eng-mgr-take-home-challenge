@@ -20,7 +20,7 @@ public class BaseControllerTest {
   @Autowired
   private MockMvc mvc;
 
-  //@Test
+  @Test
   public void getHello() throws Exception {
     mvc.perform(MockMvcRequestBuilders.get("/ping").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
