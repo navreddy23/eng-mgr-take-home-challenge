@@ -27,12 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-public class HoursWorkedController {
+public class WorkedHoursController {
 
   @Autowired
   WorkedHoursService workedHoursService;
 
-  private static final Logger logger = LoggerFactory.getLogger(HoursWorkedController.class);
+  private static final Logger logger = LoggerFactory.getLogger(WorkedHoursController.class);
 
   /**
    * retrieve all active users in the system.
