@@ -28,6 +28,7 @@
         <org.apache.commons.version>3.12.0</org.apache.commons.version>
         <failsafe.plugin.version>2.22.1</failsafe.plugin.version>
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
+        <docker.maven.plugin.version>0.34.1</docker.maven.plugin.version>
 
         <checkstyle.failOnViolation>true</checkstyle.failOnViolation>
         <checkstyle.failsOnError>true</checkstyle.failsOnError>
@@ -375,11 +376,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
             </plugin>
-            <!--io.fabric8 plugin start-->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.34.1</version>
+                <version>${docker.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <verbose>true</verbose>
@@ -416,7 +416,6 @@
                 </executions>
 
             </plugin>
-            <!--io.fabric8 plugin end-->
         </plugins>
         <resources>
             <resource>
