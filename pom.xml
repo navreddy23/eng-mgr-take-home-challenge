@@ -9,9 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.manager.takehome.challenge</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>spothero-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <packaging>war</packaging>
+    <name>spothero-app</name>
     <description>Demo project take home challenge</description>
     <properties>
         <!--<java.version>16</java.version>-->
@@ -374,6 +375,48 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
             </plugin>
+            <!--io.fabric8 plugin start-->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.34.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${project.artifactId}</name>
+                            <build>
+                                <contextDir>${project.basedir}</contextDir>
+
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </build>
+                            <run>
+                                <ports>
+                                    <port>8080:8080</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+                <!-- each time the 'package' command is run, the 'docker:build' command will be triggered -->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+            <!--io.fabric8 plugin end-->
         </plugins>
         <resources>
             <resource>
